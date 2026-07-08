@@ -1,0 +1,6 @@
+{
+  "name": "Opera Formacao - Certificados e Carteiras",
+  "description": "Sistema de gestão e emissão automática de certificados e carteiras de operador para a Opera Formação.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

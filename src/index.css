@@ -1,0 +1,88 @@
+@import url('/fonts/fonts.css');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-cursive: "Great Vibes", cursive;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-primary: var(--brand-primary, #0f5a47);
+  --color-brand-secondary: var(--brand-secondary, #1e293b);
+  --color-brand-accent: var(--brand-accent, #d97706);
+  --color-brand-neutral-bg: var(--brand-neutral-bg, #f8fafc);
+  --color-brand-light-accent: var(--brand-light-accent, #f1f5f9);
+  --color-brand-text-dark: var(--brand-text-dark, #0f172a);
+}
+
+@layer base {
+  body {
+    @apply bg-brand-neutral-bg text-brand-text-dark font-sans antialiased selection:bg-brand-accent selection:text-white;
+  }
+}
+
+/* Custom class for premium certificate font */
+.certificate-cursive {
+  font-family: 'Great Vibes', cursive;
+  font-weight: bold;
+}
+
+/* Custom smooth animations and scrollbar design */
+@keyframes loadingBar {
+  0% { left: -40%; width: 40%; }
+  50% { width: 60%; }
+  100% { left: 100%; width: 20%; }
+}
+
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-loading-bar {
+  position: absolute;
+  animation: loadingBar 2s infinite linear;
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 3s infinite ease-in-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-300 rounded-full hover:bg-zinc-400;
+}
+
+/* Document Viewer Thicker Scrollbar */
+.document-viewer-scrollbar::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+.document-viewer-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 9999px;
+}
+.document-viewer-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d4d4d8; /* zinc-300 equivalent */
+  border-radius: 9999px;
+  border: 2.5px solid transparent;
+  background-clip: padding-box;
+}
+.document-viewer-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1aa; /* zinc-400 equivalent */
+}
+

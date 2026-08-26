@@ -91,7 +91,14 @@ export default function FineTunePanel({
             newAllConfigs[cat] = {
               walletFront: { ...(newAllConfigs[cat]?.walletFront || DEFAULT_FINE_TUNE_CONFIG.walletFront), ...parsed[cat].walletFront },
               certFront: { ...(newAllConfigs[cat]?.certFront || DEFAULT_FINE_TUNE_CONFIG.certFront), ...parsed[cat].certFront },
-              certBack: { ...(newAllConfigs[cat]?.certBack || DEFAULT_FINE_TUNE_CONFIG.certBack), ...parsed[cat].certBack },
+              certBack: {
+                ...(newAllConfigs[cat]?.certBack || DEFAULT_FINE_TUNE_CONFIG.certBack),
+                ...parsed[cat].certBack,
+                emissionDate: {
+                  ...(newAllConfigs[cat]?.certBack?.emissionDate || DEFAULT_FINE_TUNE_CONFIG.certBack.emissionDate),
+                  ...(parsed[cat].certBack?.emissionDate || {})
+                }
+              },
             };
           }
         });
@@ -109,7 +116,14 @@ export default function FineTunePanel({
         const validatedConfig = {
           walletFront: { ...config.walletFront, ...parsed.walletFront },
           certFront: { ...config.certFront, ...parsed.certFront },
-          certBack: { ...config.certBack, ...parsed.certBack }
+          certBack: {
+            ...config.certBack,
+            ...parsed.certBack,
+            emissionDate: {
+              ...(config.certBack?.emissionDate || DEFAULT_FINE_TUNE_CONFIG.certBack.emissionDate),
+              ...(parsed.certBack?.emissionDate || {})
+            }
+          }
         };
         
         onChange(validatedConfig);
@@ -557,10 +571,24 @@ export default function FineTunePanel({
                 {renderControl("Largura (W)", "certBack", "machines", "width", 10, 95)}
                 {renderControl("Altura (H)", "certBack", "machines", "height", 5, 60)}
                 <div className="col-span-2">
-                  {renderControl("Tamanho Fonte Padrão", "certBack", "machines", "fontSize", 8, 50, 0.5)}
+                  {renderControl("Tamanho Fonte Padrão", "certBack", "machines", "fontSize", 1, 50, 0.5)}
                 </div>
                 <div className="col-span-2">
-                  {renderControl("Espaçamento de Linha", "certBack", "machines", "lineHeight", 0.5, 3.5, 0.1)}
+                  {renderControl("Espaçamento de Linha", "certBack", "machines", "lineHeight", 0.2, 3.5, 0.05)}
+                </div>
+              </div>
+            </div>
+
+            {/* Data de Emissão (Verso do Certificado - Canto Inferior Esquerdo) */}
+            <div className="bg-emerald-50/40 p-3.5 rounded-xl border border-emerald-200/30 space-y-2.5">
+              <span className="text-xs font-black text-slate-800 block border-l-2 border-emerald-800 pl-2 font-sans">DATA DE EMISSÃO (Verso do Certificado)</span>
+              <div className="grid grid-cols-2 gap-2.5">
+                {renderControl("Centro X (Data)", "certBack", "emissionDate", "x", 5, 95)}
+                {renderControl("Centro Y (Data)", "certBack", "emissionDate", "y", 50, 99)}
+                {renderControl("Largura (W)", "certBack", "emissionDate", "width", 5, 60)}
+                {renderControl("Altura (H)", "certBack", "emissionDate", "height", 2, 20)}
+                <div className="col-span-2">
+                  {renderControl("Tamanho Fonte (Data)", "certBack", "emissionDate", "fontSize", 1, 30, 0.5)}
                 </div>
               </div>
             </div>

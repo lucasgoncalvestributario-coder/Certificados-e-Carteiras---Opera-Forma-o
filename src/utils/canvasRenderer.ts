@@ -1,41 +1,41 @@
-import { Student, FineTuneConfig, Category } from "../types";
+import { Student, FineTuneConfig, Category, DEFAULT_FINE_TUNE_CONFIG } from "../types";
 import { formatDateBR, formatCertificateDate, calculateValidity, formatNameTitleCase, getMonthNamePT } from "./dateFormatter";
 
-// Map local paths to original remote URLs for bulletproof fallback
+// Map local paths to remote URLs
 export const REMOTE_FALLBACKS: Record<string, string> = {
   "/logo-opera.png": "https://i.postimg.cc/43jrNgQY/Chat-GPT-Image-1-de-jul-de-2026-16-01-26.png",
   "/bg/pesadas_walletFront.jpg": "https://i.postimg.cc/W1mkCHXg/Whats-App-Image-2026-06-26-at-11-02-19.jpg",
   "/bg/pesadas_walletBack.jpg": "https://i.postimg.cc/rstdJnKv/Whats-App-Image-2026-06-26-at-11-02-19-(1).jpg",
   "/bg/pesadas_certFront.jpg": "https://i.postimg.cc/5yjSFdtt/Whats-App-Image-2026-07-01-at-14-24-26.jpg",
-  "/bg/pesadas_certBack.jpg": "https://i.postimg.cc/7LYnV4wb/Whats-App-Image-2026-06-26-at-11-02-20.jpg",
+  "/bg/pesadas_certBack.jpg": "https://i.ibb.co/B2G5J5Hc/Whats-App-Image-2026-08-26-at-14-09-53-1.jpg",
   
   "/bg/agricolas_walletFront.jpg": "https://i.postimg.cc/W1mkCHXg/Whats-App-Image-2026-06-26-at-11-02-19.jpg",
   "/bg/agricolas_walletBack.jpg": "https://i.postimg.cc/zBFckr5w/Whats-App-Image-2026-07-01-at-14-33-36.jpg",
   "/bg/agricolas_certFront.jpg": "https://i.postimg.cc/kXXkfB2t/Whats-App-Image-2026-07-01-at-14-33-37-(1).jpg",
-  "/bg/agricolas_certBack.jpg": "https://i.postimg.cc/zfWMVhcC/Whats-App-Image-2026-07-01-at-14-33-37.jpg",
+  "/bg/agricolas_certBack.jpg": "https://i.ibb.co/210Q90rw/Whats-App-Image-2026-08-26-at-14-10-23.jpg",
   
   "/bg/munck_walletFront.jpg": "https://i.postimg.cc/W1mkCHXg/Whats-App-Image-2026-06-26-at-11-02-19.jpg",
   "/bg/munck_walletBack.jpg": "https://i.postimg.cc/gkQN8JR4/Whats-App-Image-2026-07-01-at-15-03-20-(2).jpg",
   "/bg/munck_certFront.jpg": "https://i.postimg.cc/pr1k0VSG/Whats-App-Image-2026-07-01-at-15-03-20-(1).jpg",
-  "/bg/munck_certBack.jpg": "https://i.postimg.cc/d08HqYhz/Whats-App-Image-2026-07-01-at-15-03-20.jpg",
+  "/bg/munck_certBack.jpg": "https://i.ibb.co/BHQgfYrR/Whats-App-Image-2026-08-26-at-14-10-24.jpg",
 
   "/bg/empilhadeira_walletFront.jpg": "https://i.postimg.cc/W1mkCHXg/Whats-App-Image-2026-06-26-at-11-02-19.jpg",
   "/bg/empilhadeira_walletBack.jpg": "https://i.postimg.cc/wvLDhJy3/Whats-App-Image-2026-07-01-at-17-29-11.jpg",
   "/bg/empilhadeira_certFront.jpg": "https://i.postimg.cc/RZp19vxx/Whats-App-Image-2026-07-01-at-17-29-11-(1).jpg",
-  "/bg/empilhadeira_certBack.jpg": "https://i.postimg.cc/PJbzkZTF/Whats-App-Image-2026-07-01-at-17-29-12.jpg",
+  "/bg/empilhadeira_certBack.jpg": "https://i.ibb.co/XcfByQd/Whats-App-Image-2026-08-26-at-14-10-15.jpg",
 
   "/bg/florestais_walletFront.jpg": "https://i.postimg.cc/W1mkCHXg/Whats-App-Image-2026-06-26-at-11-02-19.jpg",
   "/bg/florestais_walletBack.jpg": "https://i.postimg.cc/xCDzTCxQ/Whats-App-Image-2026-07-01-at-17-37-38.jpg",
   "/bg/florestais_certFront.jpg": "https://i.postimg.cc/Qdz7wScF/Whats-App-Image-2026-07-01-at-17-37-39.jpg",
-  "/bg/florestais_certBack.jpg": "https://i.postimg.cc/tCXFxsXH/Whats-App-Image-2026-07-01-at-17-37-39-(1).jpg"
+  "/bg/florestais_certBack.jpg": "https://i.ibb.co/hvvmryt/Whats-App-Image-2026-08-26-at-14-10-24-1.jpg"
 };
 
-// Core background image URLs - Offline-first paths
+// Core background image URLs
 export const BG_IMAGES = {
   walletFront: "/bg/pesadas_walletFront.jpg",
   walletBack: "/bg/pesadas_walletBack.jpg",
   certFront: "/bg/pesadas_certFront.jpg",
-  certBack: "/bg/pesadas_certBack.jpg"
+  certBack: "https://i.ibb.co/B2G5J5Hc/Whats-App-Image-2026-08-26-at-14-09-53-1.jpg"
 };
 
 export const BG_IMAGES_BY_CATEGORY: Record<Category, typeof BG_IMAGES> = {
@@ -43,31 +43,31 @@ export const BG_IMAGES_BY_CATEGORY: Record<Category, typeof BG_IMAGES> = {
     walletFront: "/bg/pesadas_walletFront.jpg",
     walletBack: "/bg/pesadas_walletBack.jpg",
     certFront: "/bg/pesadas_certFront.jpg",
-    certBack: "/bg/pesadas_certBack.jpg"
+    certBack: "https://i.ibb.co/B2G5J5Hc/Whats-App-Image-2026-08-26-at-14-09-53-1.jpg"
   },
   AGRICOLAS: {
     walletFront: "/bg/agricolas_walletFront.jpg",
     walletBack: "/bg/agricolas_walletBack.jpg",
     certFront: "/bg/agricolas_certFront.jpg",
-    certBack: "/bg/agricolas_certBack.jpg"
+    certBack: "https://i.ibb.co/210Q90rw/Whats-App-Image-2026-08-26-at-14-10-23.jpg"
   },
   MUNCK: {
     walletFront: "/bg/munck_walletFront.jpg",
     walletBack: "/bg/munck_walletBack.jpg",
     certFront: "/bg/munck_certFront.jpg",
-    certBack: "/bg/munck_certBack.jpg"
+    certBack: "https://i.ibb.co/BHQgfYrR/Whats-App-Image-2026-08-26-at-14-10-24.jpg"
   },
   EMPILHADEIRA: {
     walletFront: "/bg/empilhadeira_walletFront.jpg",
     walletBack: "/bg/empilhadeira_walletBack.jpg",
     certFront: "/bg/empilhadeira_certFront.jpg",
-    certBack: "/bg/empilhadeira_certBack.jpg"
+    certBack: "https://i.ibb.co/XcfByQd/Whats-App-Image-2026-08-26-at-14-10-15.jpg"
   },
   FLORESTAIS: {
     walletFront: "/bg/florestais_walletFront.jpg",
     walletBack: "/bg/florestais_walletBack.jpg",
     certFront: "/bg/florestais_certFront.jpg",
-    certBack: "/bg/florestais_certBack.jpg"
+    certBack: "https://i.ibb.co/hvvmryt/Whats-App-Image-2026-08-26-at-14-10-24-1.jpg"
   }
 };
 
@@ -160,7 +160,7 @@ export function drawTextBox(
   ptToPx: number,
   padding: { left: number; right: number; top: number; bottom: number },
   fontFamily: string = "sans-serif",
-  isBold: boolean = true,
+  isBold: boolean | string = true,
   noScale: boolean = false,
   isNameField: boolean = false
 ): { finalFontSize: number; overflowed: boolean } {
@@ -168,6 +168,8 @@ export function drawTextBox(
   const boxHeightPx = cfg.height * scaleY;
   const centerX = cfg.x * scaleX;
   const centerY = cfg.y * scaleY;
+
+  const fontStylePrefix = typeof isBold === "string" ? isBold : (isBold ? "600" : "normal");
 
   // Subtract internal safety margins
   const padLeft = isNameField ? 0 : padding.left;
@@ -178,7 +180,7 @@ export function drawTextBox(
   let currentFontSize = cfg.fontSize * ptToPx;
   
   // Set up font
-  ctx.font = `${isBold ? "bold" : "normal"} ${currentFontSize}px ${fontFamily}`;
+  ctx.font = `${fontStylePrefix} ${currentFontSize}px ${fontFamily}`;
   let textWidth = ctx.measureText(text).width;
 
   // Auto-fit loop: scale down font size until it fits BOTH width and height constraints
@@ -186,14 +188,14 @@ export function drawTextBox(
   if (!noScale) {
     // Para o nome do aluno, restringimos a redução a no máximo 42% do tamanho padrão
     // (minFontSizeLimit de 58% do original) para impedir que o nome longo fique minúsculo.
-    const minFontSizeLimit = isNameField ? (cfg.fontSize * 0.58 * ptToPx) : (4 * ptToPx);
+    const minFontSizeLimit = isNameField ? (cfg.fontSize * 0.58 * ptToPx) : Math.min(cfg.fontSize * ptToPx, 1 * ptToPx);
 
     while (
       (textWidth > maxTextWidth || currentFontSize > maxTextHeight) &&
       currentFontSize > minFontSizeLimit
     ) {
       currentFontSize -= 0.5;
-      ctx.font = `${isBold ? "bold" : "normal"} ${currentFontSize}px ${fontFamily}`;
+      ctx.font = `${fontStylePrefix} ${currentFontSize}px ${fontFamily}`;
       textWidth = ctx.measureText(text).width;
     }
 
@@ -207,7 +209,7 @@ export function drawTextBox(
   ctx.fillStyle = cfg.color;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.font = `${isBold ? "bold" : "normal"} ${currentFontSize}px ${fontFamily}`;
+  ctx.font = `${fontStylePrefix} ${currentFontSize}px ${fontFamily}`;
 
   // NUNCA passar o quarto parâmetro maxWidth para fillText para evitar compressão horizontal
   ctx.fillText(text, centerX, centerY);
@@ -225,7 +227,9 @@ export function drawMultiLineTextBox(
   scaleX: number,
   scaleY: number,
   ptToPx: number,
-  padding: { left: number; right: number; top: number; bottom: number }
+  padding: { left: number; right: number; top: number; bottom: number },
+  fontFamily: string = "sans-serif",
+  fontWeight: string = "normal"
 ): { finalFontSize: number; overflowed: boolean } {
   const boxWidthPx = cfg.width * scaleX;
   const boxHeightPx = cfg.height * scaleY;
@@ -250,7 +254,7 @@ export function drawMultiLineTextBox(
     if (totalHeight > maxTextHeight) {
       fits = false;
     } else {
-      ctx.font = `bold ${currentFontSize}px sans-serif`;
+      ctx.font = `${fontWeight} ${currentFontSize}px ${fontFamily}`;
       for (const line of lines) {
         const text = line.toUpperCase().trim();
         if (ctx.measureText(text).width > maxTextWidth) {
@@ -272,7 +276,7 @@ export function drawMultiLineTextBox(
   // Draw lines centered horizontally and vertically
   let startY = centerY - (totalHeight / 2) + (currentLineHeight / 2);
   ctx.fillStyle = cfg.color;
-  ctx.font = `bold ${currentFontSize}px sans-serif`;
+  ctx.font = `${fontWeight} ${currentFontSize}px ${fontFamily}`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
@@ -313,7 +317,7 @@ export function drawCertBackMachines(
   // Scale down font size until the lines fit in both height and width of the box
   let fits = false;
   let overflowed = false;
-  while (!fits && currentFontSize > 4 * ptToPx) {
+  while (!fits && currentFontSize > 1 * ptToPx) {
     fits = true;
     currentLineHeight = currentFontSize * multiplier;
     totalHeight = lines.length * currentLineHeight;
@@ -445,7 +449,7 @@ export async function drawWalletFront(
   const ptToPx = 300 / 72; // ~4.1667
 
   // Draw with absolute bounding boxes
-  // NOME DO OPERADOR (Margem interna: 10px lateral, 8px vertical)
+  // NOME DO OPERADOR (Margem interna: 10px lateral, 8px vertical) - Espessura fina e elegante (normal)
   drawTextBox(
     ctx,
     student.name.toUpperCase().trim(),
@@ -455,12 +459,12 @@ export async function drawWalletFront(
     ptToPx,
     { left: 10, right: 10, top: 8, bottom: 8 },
     "sans-serif",
-    true,
+    "normal",
     false, // noScale
     true   // isNameField
   );
 
-  // CPF DO OPERADOR (Margem interna: 10px lateral, 8px vertical)
+  // CPF DO OPERADOR (Margem interna: 10px lateral, 8px vertical) - Espessura fina e elegante (normal)
   drawTextBox(
     ctx,
     student.cpf.trim(),
@@ -470,11 +474,11 @@ export async function drawWalletFront(
     ptToPx,
     { left: 10, right: 10, top: 8, bottom: 8 },
     "sans-serif",
-    true,
+    "normal",
     true   // noScale (CPF size must never change automatically)
   );
 
-  // DATA DE NASCIMENTO (Margem interna: 10px lateral, 8px vertical)
+  // DATA DE NASCIMENTO (Margem interna: 10px lateral, 8px vertical) - Espessura fina e elegante (normal)
   drawTextBox(
     ctx,
     formatDateBR(student.birthDate),
@@ -482,10 +486,12 @@ export async function drawWalletFront(
     scaleX,
     scaleY,
     ptToPx,
-    { left: 10, right: 10, top: 8, bottom: 8 }
+    { left: 10, right: 10, top: 8, bottom: 8 },
+    "sans-serif",
+    "normal"
   );
 
-  // DATA DE VALIDADE (Margem interna: 10px lateral, 8px vertical)
+  // DATA DE VALIDADE (Margem interna: 10px lateral, 8px vertical) - Espessura fina e elegante (normal)
   drawTextBox(
     ctx,
     validityDateStr,
@@ -493,10 +499,12 @@ export async function drawWalletFront(
     scaleX,
     scaleY,
     ptToPx,
-    { left: 10, right: 10, top: 8, bottom: 8 }
+    { left: 10, right: 10, top: 8, bottom: 8 },
+    "sans-serif",
+    "normal"
   );
 
-  // MÁQUINAS (Margem interna: 10px lateral, 8px vertical, permitir quebra)
+  // MÁQUINAS (Margem interna: 10px lateral, 8px vertical, permitir quebra) - Espessura fina e elegante (normal)
   drawMultiLineTextBox(
     ctx,
     student.machines,
@@ -504,7 +512,9 @@ export async function drawWalletFront(
     scaleX,
     scaleY,
     ptToPx,
-    { left: 10, right: 10, top: 8, bottom: 8 }
+    { left: 10, right: 10, top: 8, bottom: 8 },
+    "sans-serif",
+    "normal"
   );
 }
 
@@ -757,6 +767,31 @@ export async function drawCertificateBack(
       ptToPx,
       { left: 10, right: 10, top: 8, bottom: 8 }
     );
+  }
+
+  // Draw Emission Date in bottom-left reserved space of certificate verso
+  if (student && student.emissionDate && student.id !== "EMPTY") {
+    const scaleX = canvas.width / 100;
+    const scaleY = canvas.height / 100;
+    const ptToPx = 300 / 72; // ~4.1667
+
+    const certBackConfig = config?.certBack || DEFAULT_FINE_TUNE_CONFIG.certBack;
+    const dateCfg = certBackConfig.emissionDate || DEFAULT_FINE_TUNE_CONFIG.certBack.emissionDate;
+    const dateFormatted = formatDateBR(student.emissionDate);
+
+    if (dateFormatted) {
+      drawTextBox(
+        ctx,
+        dateFormatted,
+        dateCfg,
+        scaleX,
+        scaleY,
+        ptToPx,
+        { left: 2, right: 2, top: 2, bottom: 2 },
+        "Arial, Helvetica, Roboto, 'Open Sans', sans-serif",
+        true // bold
+      );
+    }
   }
 }
 

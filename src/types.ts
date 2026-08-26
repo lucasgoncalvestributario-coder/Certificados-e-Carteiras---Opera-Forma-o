@@ -46,6 +46,7 @@ export interface FineTuneConfig {
   };
   certBack: {
     machines: TextPosition & { lineHeight?: number };
+    emissionDate: TextPosition;
   };
 }
 
@@ -67,5 +68,6 @@ export const DEFAULT_FINE_TUNE_CONFIG: FineTuneConfig = {
   },
   certBack: {
     machines: { x: 50, y: 50, width: 40, height: 30, fontSize: 16, color: "#000000", lineHeight: 1.3 },
+    emissionDate: { x: 19.5, y: 91.5, width: 22, height: 5, fontSize: 12, color: "#000000" },
   }
 };

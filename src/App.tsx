@@ -13,7 +13,14 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
           validated[cat] = {
             walletFront: { ...DEFAULT_FINE_TUNE_CONFIG.walletFront, ...parsed[cat].walletFront },
             certFront: { ...DEFAULT_FINE_TUNE_CONFIG.certFront, ...parsed[cat].certFront },
-            certBack: { ...DEFAULT_FINE_TUNE_CONFIG.certBack, ...parsed[cat].certBack },
+            certBack: {
+              ...DEFAULT_FINE_TUNE_CONFIG.certBack,
+              ...parsed[cat].certBack,
+              emissionDate: {
+                ...DEFAULT_FINE_TUNE_CONFIG.certBack.emissionDate,
+                ...(parsed[cat].certBack?.emissionDate || {})
+              }
+            },
           };
         } else {
           if (cat === "PESADAS_JHONNY" || cat === "PESADAS_RICHARD") {
@@ -21,7 +28,14 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
             validated[cat] = {
               walletFront: { ...DEFAULT_FINE_TUNE_CONFIG.walletFront, ...pesadas.walletFront },
               certFront: { ...DEFAULT_FINE_TUNE_CONFIG.certFront, ...pesadas.certFront },
-              certBack: { ...DEFAULT_FINE_TUNE_CONFIG.certBack, ...pesadas.certBack },
+              certBack: {
+                ...DEFAULT_FINE_TUNE_CONFIG.certBack,
+                ...pesadas.certBack,
+                emissionDate: {
+                  ...DEFAULT_FINE_TUNE_CONFIG.certBack.emissionDate,
+                  ...(pesadas.certBack?.emissionDate || {})
+                }
+              },
             };
           } else {
             validated[cat] = { ...DEFAULT_FINE_TUNE_CONFIG };
@@ -98,6 +112,7 @@ import StudentList from "./components/StudentList";
 import FineTunePanel from "./components/FineTunePanel";
 import CardRenderer from "./components/CardRenderer";
 import DocumentPreviewModal from "./components/DocumentPreviewModal";
+import LoginScreen from "./components/LoginScreen";
 import { extractPaletteFromLogo, DEFAULT_PALETTE, ExtractedPalette } from "./utils/logoThemeExtractor";
 import {
   ShieldCheck,
@@ -124,7 +139,8 @@ import {
   BookOpen,
   Sparkles,
   Volume2,
-  X
+  X,
+  LogOut
 } from "lucide-react";
 
 // Unicode safe Base64 encoding/decoding for sharing links
@@ -222,6 +238,12 @@ export default function App() {
   useEffect(() => {
     checkApostilasStatus();
   }, []);
+
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem("opera_formacao_authenticated") === "true";
+  });
 
   // Share & Access Control States
   const [shareParam, setShareParam] = useState<string | null>(null);
@@ -807,6 +829,21 @@ export default function App() {
     return expDate.getTime() > Date.now();
   }).length;
 
+  // Mandatory Authentication Screen
+  if (!isAuthenticated) {
+    return (
+      <LoginScreen
+        onLoginSuccess={() => {
+          sessionStorage.setItem("opera_formacao_authenticated", "true");
+          setIsAuthenticated(true);
+        }}
+        logoUrl={logoUrl}
+        onLogoError={handleLogoErrorGlobal}
+        brandPalette={brandPalette}
+      />
+    );
+  }
+
   if (isVerifyingShare && sharePayload) {
     return (
       <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center p-4 relative overflow-hidden" id="share_verification_screen">
@@ -1021,6 +1058,19 @@ export default function App() {
             >
               <BookOpen className="w-3.5 h-3.5" style={{ color: brandPalette.accent }} />
               Gerenciar Apostilas
+            </button>
+            <button
+              onClick={() => {
+                if (confirm("Deseja realmente sair e bloquear o acesso ao sistema?")) {
+                  sessionStorage.removeItem("opera_formacao_authenticated");
+                  setIsAuthenticated(false);
+                }
+              }}
+              className="px-3 py-1.5 bg-red-950/40 hover:bg-red-900/60 border border-red-800/60 text-red-300 hover:text-red-100 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+              title="Sair e bloquear acesso ao sistema"
+            >
+              <LogOut className="w-3.5 h-3.5 text-red-400" />
+              Sair
             </button>
           </div>
         </div>

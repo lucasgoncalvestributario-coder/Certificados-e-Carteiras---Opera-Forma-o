@@ -1,5 +1,5 @@
 export type Category = "PESADAS" | "AGRICOLAS" | "MUNCK" | "EMPILHADEIRA" | "FLORESTAIS";
-export type CalibrationCategory = Category | "PESADAS_JHONNY" | "PESADAS_RICHARD";
+export type CalibrationCategory = Category | "PESADAS_RICHARD" | "PESADAS_FABRICIO" | "PESADAS_JUAN";
 
 export interface Student {
   id: string;
@@ -11,7 +11,7 @@ export interface Student {
   validityYears: number;
   photoUrl: string; // Base64 representation of operator photo
   category?: Category; // Category of course/document
-  instructor?: "Ivan" | "Jhonny" | "Richard";
+  instructor?: "Richard" | "Ivan" | "Fabrício" | "Juan";
   whatsApp?: string; // Operator's WhatsApp number for internal use
   createdAt: string;
   updatedAt: string;

@@ -6,7 +6,7 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
-      const categories: CalibrationCategory[] = ["PESADAS", "AGRICOLAS", "MUNCK", "EMPILHADEIRA", "FLORESTAIS", "PESADAS_JHONNY", "PESADAS_RICHARD"];
+      const categories: CalibrationCategory[] = ["PESADAS", "PESADAS_RICHARD", "PESADAS_FABRICIO", "PESADAS_JUAN", "AGRICOLAS", "MUNCK", "EMPILHADEIRA", "FLORESTAIS"];
       const validated: Partial<Record<CalibrationCategory, FineTuneConfig>> = {};
       categories.forEach((cat) => {
         if (parsed[cat]) {
@@ -23,7 +23,7 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
             },
           };
         } else {
-          if (cat === "PESADAS_JHONNY" || cat === "PESADAS_RICHARD") {
+          if (cat === "PESADAS_RICHARD" || cat === "PESADAS_FABRICIO" || cat === "PESADAS_JUAN") {
             const pesadas = parsed["PESADAS"] || DEFAULT_FINE_TUNE_CONFIG;
             validated[cat] = {
               walletFront: { ...DEFAULT_FINE_TUNE_CONFIG.walletFront, ...pesadas.walletFront },
@@ -61,8 +61,9 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
         };
         return {
           PESADAS: { ...baseConfig },
-          PESADAS_JHONNY: { ...baseConfig },
           PESADAS_RICHARD: { ...baseConfig },
+          PESADAS_FABRICIO: { ...baseConfig },
+          PESADAS_JUAN: { ...baseConfig },
           AGRICOLAS: { ...baseConfig },
           MUNCK: { ...baseConfig },
           EMPILHADEIRA: { ...baseConfig },
@@ -74,8 +75,9 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
 
   return {
     PESADAS: { ...DEFAULT_FINE_TUNE_CONFIG },
-    PESADAS_JHONNY: { ...DEFAULT_FINE_TUNE_CONFIG },
     PESADAS_RICHARD: { ...DEFAULT_FINE_TUNE_CONFIG },
+    PESADAS_FABRICIO: { ...DEFAULT_FINE_TUNE_CONFIG },
+    PESADAS_JUAN: { ...DEFAULT_FINE_TUNE_CONFIG },
     AGRICOLAS: { ...DEFAULT_FINE_TUNE_CONFIG },
     MUNCK: { ...DEFAULT_FINE_TUNE_CONFIG },
     EMPILHADEIRA: { ...DEFAULT_FINE_TUNE_CONFIG },
@@ -86,8 +88,9 @@ const loadCategoryConfigs = (): Record<CalibrationCategory, FineTuneConfig> => {
 const getCategoryLabel = (cat: CalibrationCategory): string => {
   switch (cat) {
     case "PESADAS": return "Máquinas Pesadas (Ivan)";
-    case "PESADAS_JHONNY": return "M. Pesadas (Jhonny)";
     case "PESADAS_RICHARD": return "M. Pesadas (Richard)";
+    case "PESADAS_FABRICIO": return "M. Pesadas (Fabrício)";
+    case "PESADAS_JUAN": return "M. Pesadas (Juan)";
     case "AGRICOLAS": return "Máquinas Agrícolas";
     case "FLORESTAIS": return "Máquinas Florestais";
     case "MUNCK": return "Munck";
@@ -310,8 +313,9 @@ export default function App() {
   const importSharedConfig = (sharedConfig: FineTuneConfig) => {
     const newConfigs: Record<CalibrationCategory, FineTuneConfig> = {
       PESADAS: { ...sharedConfig },
-      PESADAS_JHONNY: { ...sharedConfig },
       PESADAS_RICHARD: { ...sharedConfig },
+      PESADAS_FABRICIO: { ...sharedConfig },
+      PESADAS_JUAN: { ...sharedConfig },
       AGRICOLAS: { ...sharedConfig },
       MUNCK: { ...sharedConfig },
       EMPILHADEIRA: { ...sharedConfig },
@@ -329,10 +333,12 @@ export default function App() {
     }
     let studentKey: CalibrationCategory = selectedPreviewStudent?.category || "PESADAS";
     if (selectedPreviewStudent?.category === "PESADAS") {
-      if (selectedPreviewStudent.instructor === "Jhonny") {
-        studentKey = "PESADAS_JHONNY";
-      } else if (selectedPreviewStudent.instructor === "Richard") {
+      if (selectedPreviewStudent.instructor === "Richard") {
         studentKey = "PESADAS_RICHARD";
+      } else if (selectedPreviewStudent.instructor === "Fabrício") {
+        studentKey = "PESADAS_FABRICIO";
+      } else if (selectedPreviewStudent.instructor === "Juan") {
+        studentKey = "PESADAS_JUAN";
       }
     }
     return categoryConfigs[studentKey];
@@ -345,10 +351,12 @@ export default function App() {
     }
     let studentKey: CalibrationCategory = selectedPreviewStudent?.category || "PESADAS";
     if (selectedPreviewStudent?.category === "PESADAS") {
-      if (selectedPreviewStudent.instructor === "Jhonny") {
-        studentKey = "PESADAS_JHONNY";
-      } else if (selectedPreviewStudent.instructor === "Richard") {
+      if (selectedPreviewStudent.instructor === "Richard") {
         studentKey = "PESADAS_RICHARD";
+      } else if (selectedPreviewStudent.instructor === "Fabrício") {
+        studentKey = "PESADAS_FABRICIO";
+      } else if (selectedPreviewStudent.instructor === "Juan") {
+        studentKey = "PESADAS_JUAN";
       }
     }
     return savedCategoryConfigs[studentKey];
@@ -370,8 +378,15 @@ export default function App() {
         createdAt: "",
         updatedAt: ""
       };
-      const mappedCategory = (activeCalibrationCategory === "PESADAS_JHONNY" || activeCalibrationCategory === "PESADAS_RICHARD") ? "PESADAS" : activeCalibrationCategory as Category;
-      const mappedInstructor = activeCalibrationCategory === "PESADAS_JHONNY" ? "Jhonny" : (activeCalibrationCategory === "PESADAS_RICHARD" ? "Richard" : "Ivan");
+      const isPesadasInstructor = activeCalibrationCategory === "PESADAS_RICHARD" || activeCalibrationCategory === "PESADAS_FABRICIO" || activeCalibrationCategory === "PESADAS_JUAN";
+      const mappedCategory = isPesadasInstructor ? "PESADAS" : activeCalibrationCategory as Category;
+      const mappedInstructor = activeCalibrationCategory === "PESADAS_RICHARD"
+        ? "Richard"
+        : activeCalibrationCategory === "PESADAS_FABRICIO"
+        ? "Fabrício"
+        : activeCalibrationCategory === "PESADAS_JUAN"
+        ? "Juan"
+        : "Ivan";
       return {
         ...baseStudent,
         category: mappedCategory,

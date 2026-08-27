@@ -529,10 +529,12 @@ export async function drawWalletBack(
 
   let bgUrl = BG_IMAGES_BY_CATEGORY[category]?.walletBack || BG_IMAGES.walletBack;
   if (category === "PESADAS") {
-    if (student?.instructor === "Jhonny") {
-      bgUrl = "https://i.postimg.cc/ZK6Rmqx0/Whats-App-Image-2026-07-04-at-11-28-10-(1).jpg";
-    } else if (student?.instructor === "Richard") {
+    if (student?.instructor === "Richard") {
       bgUrl = "https://i.postimg.cc/rwpvJnsX/Whats-App-Image-2026-07-04-at-11-34-29.jpg";
+    } else if (student?.instructor === "Fabrício") {
+      bgUrl = "https://i.ibb.co/0VVLyVbF/VERSO-CARTEIRINHA-FABRICIO.jpg";
+    } else if (student?.instructor === "Juan") {
+      bgUrl = "https://i.ibb.co/XrNktwGf/VERSO-CARTEIRINHA-JUAN.jpg";
     }
   }
 
@@ -579,10 +581,12 @@ export async function drawCertificateFront(
   const category = student.category || "PESADAS";
   let bgUrl = BG_IMAGES_BY_CATEGORY[category]?.certFront || BG_IMAGES.certFront;
   if (category === "PESADAS") {
-    if (student.instructor === "Jhonny") {
-      bgUrl = "https://i.postimg.cc/gkyRYpVn/Whats-App-Image-2026-07-06-at-11-52-45.jpg";
-    } else if (student.instructor === "Richard") {
+    if (student.instructor === "Richard") {
       bgUrl = "https://i.postimg.cc/13WRy7fh/Whats-App-Image-2026-07-06-at-11-55-10-(1).jpg";
+    } else if (student.instructor === "Fabrício") {
+      bgUrl = "https://i.ibb.co/ccQGTBVC/FRENTE-CERTIFICADO-FABRICIO.jpg";
+    } else if (student.instructor === "Juan") {
+      bgUrl = "https://i.ibb.co/rKhvG6Tt/FRENTE-CERTIFICADO-JUAN.jpg";
     }
   }
   const bgImg = await loadImage(bgUrl);

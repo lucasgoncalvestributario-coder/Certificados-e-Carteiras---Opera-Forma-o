@@ -83,7 +83,7 @@ export default function StudentForm({ student, onSave, onCancel }: StudentFormPr
 
   const [validityYears, setValidityYears] = useState<number>(student?.validityYears || 1);
   const [category, setCategory] = useState<Category>(student?.category || "PESADAS");
-  const [instructor, setInstructor] = useState<"Ivan" | "Jhonny" | "Richard">(student?.instructor || "Ivan");
+  const [instructor, setInstructor] = useState<"Richard" | "Ivan" | "Fabrício" | "Juan">(student?.instructor || "Richard");
   const [machines, setMachines] = useState<string[]>(student?.machines || []);
   const [customMachine, setCustomMachine] = useState("");
   const [photoUrl, setPhotoUrl] = useState(student?.photoUrl || "");
@@ -109,7 +109,7 @@ export default function StudentForm({ student, onSave, onCancel }: StudentFormPr
       setValidityYears(student.validityYears);
       const cat = student.category || "PESADAS";
       setCategory(cat);
-      setInstructor(student.instructor || "Ivan");
+      setInstructor(student.instructor || "Richard");
       
       if (cat === "AGRICOLAS") {
         const allowed = ["TRATOR PNEU", "PULVERIZADOR", "COLHEITADEIRA"];
@@ -513,12 +513,13 @@ export default function StudentForm({ student, onSave, onCancel }: StudentFormPr
                   </label>
                   <select
                     value={instructor}
-                    onChange={(e) => setInstructor(e.target.value as "Ivan" | "Jhonny" | "Richard")}
+                    onChange={(e) => setInstructor(e.target.value as "Richard" | "Ivan" | "Fabrício" | "Juan")}
                     className="w-full px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all font-bold text-zinc-800 text-sm"
                   >
-                    <option value="Ivan">Ivan</option>
-                    <option value="Jhonny">Jhonny</option>
                     <option value="Richard">Richard</option>
+                    <option value="Ivan">Ivan</option>
+                    <option value="Fabrício">Fabrício</option>
+                    <option value="Juan">Juan</option>
                   </select>
                 </div>
               )}

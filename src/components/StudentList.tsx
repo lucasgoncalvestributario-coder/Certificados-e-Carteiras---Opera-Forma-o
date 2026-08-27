@@ -95,10 +95,12 @@ export default function StudentList({
 
       let configKey: CalibrationCategory = student.category || "PESADAS";
       if (student.category === "PESADAS") {
-        if (student.instructor === "Jhonny") {
-          configKey = "PESADAS_JHONNY";
-        } else if (student.instructor === "Richard") {
+        if (student.instructor === "Richard") {
           configKey = "PESADAS_RICHARD";
+        } else if (student.instructor === "Fabrício") {
+          configKey = "PESADAS_FABRICIO";
+        } else if (student.instructor === "Juan") {
+          configKey = "PESADAS_JUAN";
         }
       }
       const studentConfig = (fineTuneConfig as any).walletFront

@@ -37,8 +37,9 @@ export default function FineTunePanel({
   const getCategoryLabel = (cat: CalibrationCategory): string => {
     switch (cat) {
       case "PESADAS": return "Máquinas Pesadas (Ivan)";
-      case "PESADAS_JHONNY": return "M. Pesadas (Jhonny)";
       case "PESADAS_RICHARD": return "M. Pesadas (Richard)";
+      case "PESADAS_FABRICIO": return "M. Pesadas (Fabrício)";
+      case "PESADAS_JUAN": return "M. Pesadas (Juan)";
       case "AGRICOLAS": return "Máquinas Agrícolas";
       case "FLORESTAIS": return "Máquinas Florestais";
       case "MUNCK": return "Munck";
@@ -79,7 +80,7 @@ export default function FineTunePanel({
 
       const parsed = JSON.parse(decoded);
       
-      const categories: CalibrationCategory[] = ["PESADAS", "AGRICOLAS", "MUNCK", "EMPILHADEIRA", "FLORESTAIS", "PESADAS_JHONNY", "PESADAS_RICHARD"];
+      const categories: CalibrationCategory[] = ["PESADAS", "PESADAS_RICHARD", "PESADAS_FABRICIO", "PESADAS_JUAN", "AGRICOLAS", "MUNCK", "EMPILHADEIRA", "FLORESTAIS"];
       const isFullBackup = categories.some((cat) => parsed[cat] !== undefined);
 
       if (isFullBackup) {
@@ -271,8 +272,8 @@ export default function FineTunePanel({
         <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-2">
           Selecione o Modelo de Certificado para Calibrar Individualmente:
         </span>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
-          {(["PESADAS", "PESADAS_JHONNY", "PESADAS_RICHARD", "AGRICOLAS", "FLORESTAIS", "MUNCK", "EMPILHADEIRA"] as CalibrationCategory[]).map((cat) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
+          {(["PESADAS", "PESADAS_RICHARD", "PESADAS_FABRICIO", "PESADAS_JUAN", "AGRICOLAS", "FLORESTAIS", "MUNCK", "EMPILHADEIRA"] as CalibrationCategory[]).map((cat) => {
             const isActive = activeCategory === cat;
             const hasUnsavedCatChanges = JSON.stringify(categoryConfigs[cat]) !== JSON.stringify(savedCategoryConfigs[cat]);
             return (
@@ -525,11 +526,11 @@ export default function FineTunePanel({
             <div className="bg-slate-100/60 p-3.5 rounded-xl border border-slate-200/50 space-y-2.5">
               <span className="text-xs font-black text-slate-750 block border-l-2 border-emerald-800 pl-2">CPF DO OPERADOR (Somente os números)</span>
               <div className="grid grid-cols-2 gap-2.5">
-                {renderControl("Centro X", "certFront", "cpf", "x", 10, 90)}
-                {renderControl("Centro Y", "certFront", "cpf", "y", 10, 90)}
-                {renderControl("Largura (W)", "certFront", "cpf", "width", 10, 90)}
+                {renderControl("Centro X", "certFront", "cpf", "x", 5, 95)}
+                {renderControl("Centro Y", "certFront", "cpf", "y", 5, 95)}
+                {renderControl("Largura (W)", "certFront", "cpf", "width", 5, 95)}
                 <div className="col-span-2">
-                  {renderControl("Tamanho Fonte Padrão", "certFront", "cpf", "fontSize", 8, 50, 0.5)}
+                  {renderControl("Tamanho Fonte Padrão", "certFront", "cpf", "fontSize", 1, 50, 0.5)}
                 </div>
               </div>
             </div>

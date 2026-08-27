@@ -570,6 +570,7 @@ export async function drawCertificateFront(
 
   // Wait for cursive font to load to prevent canvas drawing default sans-serif font
   try {
+    await document.fonts.load("48px 'Great Vibes'");
     await document.fonts.ready;
   } catch (e) {
     console.warn("Fonts not fully loaded yet, drawing anyway.");
@@ -614,8 +615,9 @@ export async function drawCertificateFront(
   const scaleX = canvas.width / 100;
   const scaleY = canvas.height / 100;
   const ptToPx = 300 / 72; // ~4.1667
+  const cursiveFontFamily = "'Great Vibes', 'Alex Brush', 'Dancing Script', cursive";
 
-  // 1. Draw Cursive Premium Name exactly over the GOLDEN LINE with bounding box and AUTO FIT
+  // 1. Draw Name exactly over the GOLDEN LINE with bounding box and AUTO FIT
   const nameCfg = config.certFront.name;
   const text = formatNameTitleCase(student.name);
 
@@ -634,13 +636,13 @@ export async function drawCertificateFront(
     scaleY,
     ptToPx,
     { left: 10, right: 10, top: 8, bottom: 8 },
-    "'Great Vibes', cursive, 'Brush Script MT', sans-serif",
-    true,
+    cursiveFontFamily,
+    "normal",
     false, // noScale
     true   // isNameField
   );
 
-  // 2. Draw CPF text: only the formatted CPF numbers inside its box in formal serif bold font
+  // 2. Draw CPF text: formatted CPF in cursive calligraphy font
   if (config.certFront.cpf) {
     const cpfCfg = config.certFront.cpf;
     const cpfTextFormatted = student.cpf;
@@ -653,8 +655,8 @@ export async function drawCertificateFront(
       scaleY,
       ptToPx,
       { left: 10, right: 10, top: 8, bottom: 8 },
-      "Arial, Helvetica, Roboto, 'Open Sans', sans-serif",
-      true, // bold
+      cursiveFontFamily,
+      "normal",
       true  // noScale (CPF size must never change automatically)
     );
   }
@@ -692,8 +694,8 @@ export async function drawCertificateFront(
       scaleY,
       ptToPx,
       { left: 0, right: 0, top: 0, bottom: 0 },
-      "'Great Vibes', cursive, 'Brush Script MT', sans-serif",
-      true // bold
+      cursiveFontFamily,
+      "normal"
     );
 
     // Draw MÊS (Month)
@@ -705,8 +707,8 @@ export async function drawCertificateFront(
       scaleY,
       ptToPx,
       { left: 0, right: 0, top: 0, bottom: 0 },
-      "'Great Vibes', cursive, 'Brush Script MT', sans-serif",
-      true // bold
+      cursiveFontFamily,
+      "normal"
     );
   }
 }
